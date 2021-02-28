@@ -1,0 +1,14 @@
+CREATE ROLE magneto LOGIN ENCRYPTED PASSWORD '12345' SUPERUSER INHERIT CREATEDB NOCREATEROLE NOREPLICATION;
+
+CREATE DATABASE magnetodb WITH ENCODING='UTF8' OWNER=magneto CONNECTION LIMIT=-1 TABLESPACE=pg_default;
+
+\connect magnetodb;
+
+CREATE SCHEMA mutants AUTHORIZATION magneto;
+
+CREATE TABLE mutants.mutant_analysis (
+dna_sequence varchar(255) PRIMARY KEY,
+is_mutant BOOLEAN NOT NULL
+);
+
+GRANT ALL PRIVILEGES ON TABLE mutants.mutant_analysis TO magneto;
