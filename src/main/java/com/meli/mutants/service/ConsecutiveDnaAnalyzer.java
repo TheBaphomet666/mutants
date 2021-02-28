@@ -1,6 +1,7 @@
 package com.meli.mutants.service;
 
 import com.meli.mutants.util.ArrayUtil;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 
@@ -10,6 +11,7 @@ import java.util.ArrayList;
  * consecutive Codons.
  *
  */
+@Slf4j
 public class ConsecutiveDnaAnalyzer implements DnaAnalyzer {
 
     /**
@@ -37,19 +39,19 @@ public class ConsecutiveDnaAnalyzer implements DnaAnalyzer {
             var row = dnaMatrix.get(i);
             for (int j = 0; j < row.size() && mutantMatches < MUTANT_COEFFICIENT; j++) {
 
-                if(row.size() - j > MUTANT_CODON_CONSECUTIVE) {
+                if(row.size() - j >= MUTANT_CODON_CONSECUTIVE) {
 
                     mutantMatches += isAMutantRowSequence(row, j) ? 1 : 0;
                 }
 
-                if(dnaMatrix.size() - i > MUTANT_CODON_CONSECUTIVE) {
+                if(dnaMatrix.size() - i >= MUTANT_CODON_CONSECUTIVE) {
 
                     mutantMatches += isAMutantColumnSequence(dnaMatrix, i, j) ? 1 : 0;
                 }
 
-                if (row.size() - j > MUTANT_CODON_CONSECUTIVE && dnaMatrix.size() - i > MUTANT_CODON_CONSECUTIVE) {
+                if (row.size() - j >= MUTANT_CODON_CONSECUTIVE && dnaMatrix.size() - i >= MUTANT_CODON_CONSECUTIVE) {
 
-                    mutantMatches += isMutantDiagonalColumnSequence(dnaMatrix, i, j) ? 1 : 0;
+                    mutantMatches += isMutantDiagonalSequence(dnaMatrix, i, j) ? 1 : 0;
                 }
 
             }
@@ -84,20 +86,20 @@ public class ConsecutiveDnaAnalyzer implements DnaAnalyzer {
      * Validates if the column on the given indexes is a mutant sequence.
      *
      * @param dnaMatrix the matrix with the codons.
-     * @param horizontalIndex the starting horizontal index.
-     * @param verticalIndex the starting vertical index.
+     * @param rowIndex the starting vertical index.
+     * @param columnIndex the starting horizontal index.
      * @return true if is a mutant column false if it is not.
      */
     private boolean isAMutantColumnSequence(final ArrayList<ArrayList<String>> dnaMatrix,
-                                            final int horizontalIndex,
-                                            final int verticalIndex) {
+                                            final int rowIndex,
+                                            final int columnIndex) {
 
 
-        String sample = dnaMatrix.get(horizontalIndex).get(verticalIndex);
+        String sample = dnaMatrix.get(rowIndex).get(columnIndex);
 
-        for (int i = horizontalIndex+1; i < horizontalIndex + MUTANT_CODON_CONSECUTIVE; i++){
+        for (int i = rowIndex+1; i < rowIndex + MUTANT_CODON_CONSECUTIVE; i++){
 
-            if (!sample.equals(dnaMatrix.get(i).get(verticalIndex))) {
+            if (!sample.equals(dnaMatrix.get(i).get(columnIndex))) {
 
                 return false;
             }
@@ -110,20 +112,20 @@ public class ConsecutiveDnaAnalyzer implements DnaAnalyzer {
      * Validates if the diagonal on the given indexes is a mutant sequence.
      *
      * @param dnaMatrix the matrix with the codons.
-     * @param horizontalIndex the starting horizontal index.
-     * @param verticalIndex the starting vertical index.
+     * @param columnIndex the starting horizontal index.
+     * @param rowIndex the starting vertical index.
      * @return true if is a mutant diagonal false if it is not.
      */
-    private boolean isMutantDiagonalColumnSequence(final ArrayList<ArrayList<String>> dnaMatrix,
-                                                   final int horizontalIndex,
-                                                   final int verticalIndex) {
+    private boolean isMutantDiagonalSequence(final ArrayList<ArrayList<String>> dnaMatrix,
+                                             final int columnIndex,
+                                             final int rowIndex) {
 
 
-        String sample = dnaMatrix.get(horizontalIndex).get(verticalIndex);
+        String sample = dnaMatrix.get(rowIndex).get(columnIndex);
 
         for (int i = 1; i < MUTANT_CODON_CONSECUTIVE; i++){
 
-            if (!sample.equals(dnaMatrix.get(verticalIndex + i).get(horizontalIndex + i))) {
+            if (!sample.equals(dnaMatrix.get(rowIndex + i).get(columnIndex + i))) {
 
                 return false;
             }
