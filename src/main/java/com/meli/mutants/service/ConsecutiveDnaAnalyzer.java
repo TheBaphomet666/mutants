@@ -1,7 +1,6 @@
 package com.meli.mutants.service;
 
 import com.meli.mutants.util.ArrayUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

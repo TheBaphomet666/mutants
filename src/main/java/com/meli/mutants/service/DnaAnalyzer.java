@@ -1,5 +1,8 @@
 package com.meli.mutants.service;
 
+/**
+ * Interface that define behavior for a dna analyzer
+ */
 public interface DnaAnalyzer {
 
     /**
