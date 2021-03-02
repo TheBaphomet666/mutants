@@ -1,9 +1,13 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # Database configurations
 # ----------------------------------------------------------------------------------------------------------------------
+#spring:
+ # datasource:
+  #  url: jdbc:postgresql://localhost:5434/magnetodb
+   # username: magneto
+    #password: 12345
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5434/magnetodb
-    username: magneto
-    password: 12345
-
+    url: jdbc:postgresql://ec2-50-16-108-41.compute-1.amazonaws.com:5432/d3n0gt1tdbag1m
+    username: pwwcbhwyiueqgq
+    password: 932c5113167a810f83b2ac02ca0df6a9cb2227bf758b18f57dd5c84e523d8725
