@@ -2,6 +2,7 @@ package com.meli.mutants.controller;
 
 import com.meli.mutants.model.Exception.InvalidDataException;
 import com.meli.mutants.service.MutantStatsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Rest controller for Dna analysis.
  */
+@Slf4j
 @RestController
 public class MutantStatsController {
 
@@ -53,6 +55,7 @@ public class MutantStatsController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } else {
 
+            log.error("Internal server error", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

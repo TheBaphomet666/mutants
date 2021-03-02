@@ -2,12 +2,13 @@ package com.meli.mutants.service;
 
 import com.meli.mutants.persistence.entities.MutantAnalysis;
 import com.meli.mutants.persistence.repository.MutantAnalysisRepository;
+import com.meli.mutants.util.ArrayUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
-import static com.meli.mutants.util.HashingUtil.createIdentifier;
+import static com.meli.mutants.util.HashingUtil.createHash;
 
 /**
  * Service that analyzes dna in order to find if dna is mutant or not.
@@ -39,8 +40,12 @@ public class DnaAnalyzerService {
      */
     public boolean analyzeDnaSequence(String[] dnaSequence){
 
+        if(!ArrayUtil.isSquareMatrix(dnaSequence)) {
+
+            throw new IllegalArgumentException("The given matrix was not square");
+        }
         boolean analysisResult = dnaAnalyzer.isMutant(dnaSequence);
-        mutantAnalysisRepository.save(new MutantAnalysis(createIdentifier(Arrays.toString(dnaSequence)), analysisResult));
+        mutantAnalysisRepository.save(new MutantAnalysis(createHash(Arrays.toString(dnaSequence)), analysisResult));
 
         return analysisResult;
     }

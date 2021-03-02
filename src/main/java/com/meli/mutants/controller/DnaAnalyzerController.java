@@ -2,7 +2,7 @@ package com.meli.mutants.controller;
 
 import com.meli.mutants.controller.dto.MutantAnalysisRequest;
 import com.meli.mutants.service.DnaAnalyzerService;
-import com.meli.mutants.util.ArrayUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +15,7 @@ import javax.validation.Valid;
 /**
  * Rest controller for Dna analysis.
  */
+@Slf4j
 @RestController
 public class DnaAnalyzerController {
 
@@ -38,13 +39,33 @@ public class DnaAnalyzerController {
     @PostMapping("/mutant")
     public ResponseEntity<?> analyzeDnaSequence(@Valid @RequestBody final MutantAnalysisRequest mutantAnalysisRequest){
 
-        if(!ArrayUtil.isSquareMatrix(mutantAnalysisRequest.getDna())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        try {
+
+            HttpStatus response = dnaAnalyzerService.analyzeDnaSequence(mutantAnalysisRequest.getDna()) ? HttpStatus.OK
+                    : HttpStatus.FORBIDDEN;
+
+            return new ResponseEntity<>(response);
+        } catch (Exception e){
+
+            return buildErrorResponse(e);
         }
+    }
 
-        HttpStatus response = dnaAnalyzerService.analyzeDnaSequence(mutantAnalysisRequest.getDna()) ? HttpStatus.OK
-                : HttpStatus.FORBIDDEN;
+    /**
+     * Builds a response in case of error
+     *
+     * @param e the exception
+     * @return the error response
+     */
+    private ResponseEntity<?> buildErrorResponse(Exception e) {
 
-        return new ResponseEntity<>(response);
+        if(e instanceof IllegalArgumentException) {
+
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } else {
+
+            log.error("Internal server error", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

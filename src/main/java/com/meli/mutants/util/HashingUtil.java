@@ -15,7 +15,7 @@ public final class HashingUtil {
      * @param string to be hashed
      * @return the hash
      */
-    public static String createIdentifier(String string) {
+    public static String createHash(String string) {
         return Hashing
                 .murmur3_32()
                 .newHasher()
