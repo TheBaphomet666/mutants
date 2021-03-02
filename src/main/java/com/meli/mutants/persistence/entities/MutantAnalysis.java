@@ -1,6 +1,8 @@
 package com.meli.mutants.persistence.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -13,6 +15,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(schema = "mutants", name = "mutant_analysis")
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class MutantAnalysis {
