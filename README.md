@@ -1,6 +1,7 @@
 # mutants
 ## La app está desplegada en https://mutantsmal.herokuapp.com/
 ## e.g https://mutantsmal.herokuapp.com/stats
+## Swagger https://mutantsmal.herokuapp.com/swagger-ui.html
 
 ### este es un proyecto de maven, la paquetería y las pruebas se pueden correr con los commandos de mvn.
 
