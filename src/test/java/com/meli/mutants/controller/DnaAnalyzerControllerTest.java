@@ -2,8 +2,6 @@ package com.meli.mutants.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meli.mutants.controller.dto.MutantAnalysisRequest;
-import com.meli.mutants.controller.dto.MutantAnalysisStatsResponse;
-import com.meli.mutants.model.Exception.InvalidDataException;
 import com.meli.mutants.service.DnaAnalyzerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.floatThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
