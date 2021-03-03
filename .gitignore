@@ -21,7 +21,7 @@ target/
 
 ### NetBeans ###
 /nbproject/private/
-/nbbuild/
+/nbbuild/M
 /dist/
 /nbdist/
 /.nb-gradle/
@@ -33,3 +33,5 @@ build/
 .vscode/
 
 postgres_data/
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
