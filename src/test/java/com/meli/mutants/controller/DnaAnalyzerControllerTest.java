@@ -1,5 +1,6 @@
 package com.meli.mutants.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meli.mutants.controller.dto.MutantAnalysisRequest;
 import com.meli.mutants.service.DnaAnalyzerService;
@@ -102,11 +103,9 @@ class DnaAnalyzerControllerTest {
      * @param obj the object
      * @return the Object as a JSON String
      */
-    private String asJsonString(final Object obj) {
-        try {
+    private String asJsonString(final Object obj) throws JsonProcessingException {
+
             return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
     }
 }
